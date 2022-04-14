@@ -5,17 +5,21 @@ public class MailRequestData {
 	private String from;
 	private String password;
 	private String to;
-	private byte[] content;
+	private String content;
+	private byte[] attachment;
+	private String subject;
 
 	public MailRequestData() {
 	}
 
-	public MailRequestData(String from, String password, String to, byte[] content) {
+	public MailRequestData(String from, String password, String to, String content, byte[] attachment, String subject) {
 		super();
 		this.from = from;
 		this.password = password;
 		this.to = to;
 		this.content = content;
+		this.attachment = attachment;
+		this.subject = subject;
 	}
 
 	public String getFrom() {
@@ -42,12 +46,28 @@ public class MailRequestData {
 		this.to = to;
 	}
 
-	public byte[] getContent() {
+	public String getContent() {
 		return content;
 	}
 
-	public void setContent(byte[] content) {
+	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public byte[] getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(byte[] attachment) {
+		this.attachment = attachment;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 
 	@Override

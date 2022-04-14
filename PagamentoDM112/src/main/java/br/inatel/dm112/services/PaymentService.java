@@ -21,7 +21,7 @@ public class PaymentService {
 
 	@Autowired
 	private BilletClient clientBillet;
-	
+
 	@Autowired
 	private EmailClient clientEmail;
 
@@ -32,13 +32,13 @@ public class PaymentService {
 	 * (3) gera o boleto
 	 * (4) envia email com o pdf
 	 * (5) retorna sucesso
-	 * 
+	 *
 	 * @param cpf
 	 * @param orderNumber
 	 * @return
 	 */
 	public PaymentStatus startPaymentOfOrder(String cpf, int orderNumber) {
-		
+
 		if (cpf == null || orderNumber < 0) {
 			return PaymentStatus.createErrorStatus(cpf, orderNumber, PAY_STATUS.NULL_VALUES);
 		}
@@ -49,7 +49,7 @@ public class PaymentService {
 			System.out.println("Order " + orderNumber + " not found.");
 			return PaymentStatus.createErrorStatus(cpf, orderNumber, PAY_STATUS.ORDER_NOT_FOUND);
 		}
-		
+
 		if(order.getStatus() != Order.STATUS.PENDING.ordinal()) {
 			System.out.println("Invalid order status: " + orderNumber + ": " + order.getStatus());
 			return PaymentStatus.createErrorStatus(cpf, orderNumber, PAY_STATUS.WRONG_ORDER_STATUR);
@@ -57,7 +57,7 @@ public class PaymentService {
 
 		order.setIssueDate(new Date());
 		order.setStatus(Order.STATUS.PENDING.ordinal()); //pendente de pagamento
-		
+
 		try {
 			clientOrder.updateOrder(order); //(2) atualiza o status do pedido
 		} catch(Exception e ) {
@@ -71,10 +71,10 @@ public class PaymentService {
 			System.out.println("Erro no serviço de boleto");
 			return PaymentStatus.createErrorStatus(cpf, orderNumber, PAY_STATUS.BILLET_ERROR);
 		}
-		
+
 		byte [] PDFContent = respBillet.getPdfContent();
 		try {
-			clientEmail.callSendMailService(PDFContent); //(4) envia email com o pdf
+			clientEmail.callSendMailService(PDFContent, "Boleto", "Boleto gerado pelo sistema de Vendas"); //(4) envia email com o pdf
 		} catch(Exception e ) {
 			System.out.println("Erro no serviço de email");
 			return PaymentStatus.createErrorStatus(cpf, orderNumber, PAY_STATUS.EMAIL_ERROR);
@@ -89,17 +89,17 @@ public class PaymentService {
 	 * (2) confirma o pagamento
 	 * (3) atualiza o status do pedido
 	 * (4) responde Ok
-	 * 
+	 *
 	 * @param cpf
 	 * @param orderNumber
 	 * @return
 	 */
 	public PaymentStatus confirmPaymentOfOrder(String cpf, int orderNumber) {
-		
+
 		if (cpf == null || orderNumber < 0) {
 			return PaymentStatus.createErrorStatus(cpf, orderNumber, PAY_STATUS.NULL_VALUES);
 		}
-		
+
 		Order order = clientOrder.retrieveOrder(orderNumber); //(1) consulta o pedido pelo número
 
 		if(order == null) { //alguma hora vai ser preciso verificar o status do pedido aqui

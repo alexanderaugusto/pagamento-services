@@ -16,7 +16,7 @@ public class EmailClientRunner {
 
 		byte[] bytes = readPDFFile();
 		if (bytes != null) {
-			client.callSendMailService(bytes);
+			client.callSendMailService(bytes, "Boleto", "Boleto gerado pelo sistema de Vendas");
 			System.out.println("Sucesso na chamada para envio do email.");
 		}
 	}
