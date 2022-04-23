@@ -18,8 +18,8 @@ public class MailRequestData {
 		this.password = password;
 		this.to = to;
 		this.content = content;
-		this.setAttachment(attachment);
-		this.setSubject(subject);
+		this.attachment = attachment;
+		this.subject = subject;
 	}
 
 	public String getFrom() {

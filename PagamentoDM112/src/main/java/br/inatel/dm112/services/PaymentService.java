@@ -50,7 +50,7 @@ public class PaymentService {
 			return PaymentStatus.createErrorStatus(cpf, orderNumber, PAY_STATUS.ORDER_NOT_FOUND);
 		}
 
-		if(order.getStatus() != Order.STATUS.PENDING.ordinal()) {
+		if(order.getStatus() != Order.STATUS.FILLED.ordinal()) {
 			System.out.println("Invalid order status: " + orderNumber + ": " + order.getStatus());
 			return PaymentStatus.createErrorStatus(cpf, orderNumber, PAY_STATUS.WRONG_ORDER_STATUR);
 		}

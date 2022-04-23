@@ -2,6 +2,7 @@ package br.inatel.dm112.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import br.inatel.dm112.model.Order;
 import br.inatel.dm112.model.dao.OrderRepository;
 import br.inatel.dm112.model.entities.OrderEntity;
+import br.inatel.dm112.rest.filter.OrderFilter;
 import br.inatel.dm112.rest.support.OrderNotFoundException;
 
 @Service
@@ -46,8 +48,9 @@ public class OrderService {
 		return entity;
 	}
 
-	public List<Order> getAllOrders() {
-		List<OrderEntity> entities = repo.findAll();
+	public List<Order> getAllOrders(Map<String, String> queryParams) {
+
+		List<OrderEntity> entities = repo.findAll(new OrderFilter().filterByQueryParams(queryParams));
 		List<Order> orders = new ArrayList<>();
 
 		for (OrderEntity entity : entities) {
@@ -64,11 +67,15 @@ public class OrderService {
 		entity.setOrderDate(order.getOrderDate());
 		entity.setIssueDate(order.getIssueDate());
 		entity.setPaymentDate(order.getPaymentDate());
+		entity.setDeliveryStatus(order.getDeliveryStatus());
+		entity.setDeliveryDate(order.getDeliveryDate());
+		entity.setDeliveryCpf(order.getDeliveryCpf());
 	}
 
 	public static Order convertToOrder(OrderEntity entity) {
 		Order order = new Order(entity.getNumber(), entity.getCPF(), entity.getValue(), entity.getStatus(),
-				entity.getOrderDate(), entity.getIssueDate(), entity.getPaymentDate());
+				entity.getOrderDate(), entity.getIssueDate(), entity.getPaymentDate(),
+				entity.getDeliveryStatus(), entity.getDeliveryDate(), entity.getDeliveryCpf());
 		return order;
 	}
 
@@ -80,6 +87,9 @@ public class OrderService {
 		entity.setOrderDate(order.getOrderDate());
 		entity.setIssueDate(order.getIssueDate());
 		entity.setPaymentDate(order.getPaymentDate());
+		entity.setDeliveryStatus(order.getDeliveryStatus());
+		entity.setDeliveryDate(order.getDeliveryDate());
+		entity.setDeliveryCpf(order.getDeliveryCpf());
 		return entity;
 	}
 

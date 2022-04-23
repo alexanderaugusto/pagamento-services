@@ -1,6 +1,7 @@
 package br.inatel.dm112.rest;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,9 +65,9 @@ public class OrderRest implements OrderInterface {
 	// usado para teste
 	@Override
 	@GetMapping("/orders")
-	public List<Order> getAllOrders() {
+	public List<Order> getAllOrders(@RequestParam Map<String, String> queryParams) {
 
 		System.out.println("OrderRest - getAllOrders");
-		return service.getAllOrders();
+		return service.getAllOrders(queryParams);
 	}
 }

@@ -7,6 +7,8 @@ public class Order {
 //	@JsonIgnore
 	public static enum STATUS { FILLED, PENDING, CONFIRMED }
 
+	public static enum DELIVERY_STATUS { PENDING, ON_ROUTE, DELIVERED }
+
 	private int number;
 
 	private String cpf;
@@ -21,11 +23,17 @@ public class Order {
 	private Date issueDate;
 
 	private Date paymentDate;
-	
+
+	private int deliveryStatus;
+
+	private Date deliveryDate;
+
+	private String deliveryCpf;
+
 	public Order() {
 	}
 
-	public Order(int number, String cpf, float value, int status, Date orderDate, Date issueDate, Date paymentDate) {
+	public Order(int number, String cpf, float value, int status, Date orderDate, Date issueDate, Date paymentDate, int deliveryStatus, Date deliveryDate, String deliveryCpf) {
 		super();
 		this.number = number;
 		this.cpf = cpf;
@@ -34,6 +42,9 @@ public class Order {
 		this.orderDate = orderDate;
 		this.issueDate = issueDate;
 		this.paymentDate = paymentDate;
+		this.deliveryStatus = deliveryStatus;
+		this.deliveryDate = deliveryDate;
+		this.deliveryCpf = deliveryCpf;
 	}
 
 	public int getNumber() {
@@ -90,6 +101,30 @@ public class Order {
 
 	public void setPaymentDate(Date paymentDate) {
 		this.paymentDate = paymentDate;
+	}
+
+	public int getDeliveryStatus() {
+		return deliveryStatus;
+	}
+
+	public void setDeliveryStatus(int deliveryStatus) {
+		this.deliveryStatus = deliveryStatus;
+	}
+
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public String getDeliveryCpf() {
+		return deliveryCpf;
+	}
+
+	public void setDeliveryCpf(String deliveryCpf) {
+		this.deliveryCpf = deliveryCpf;
 	}
 
 	@Override
